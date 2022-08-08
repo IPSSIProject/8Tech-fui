@@ -1,0 +1,34 @@
+.primaryBlock{
+    background-color: #A5A5A5;
+    width: 100%;
+    margin-top: auto;
+}
+
+.listBlock{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+.listBlock li{
+    list-style: none;
+    padding-top: 10px;
+    padding-left: 25px;
+    text-align: center;
+}
+.listBlock a{
+    text-decoration: none;
+    color: white;
+
+}
+.titreList{
+    color: white;
+    font-size: 20px;
+    text-align: center;
+    font-weight: bold;
+}
+
+#logoBlanc{
+    width: 150px;
+
+}

@@ -1,0 +1,7 @@
+.slider-container {
+    padding: 0 80px;
+}
+
+.slider-control-bottomcenter {
+    bottom: unset !important;
+}
