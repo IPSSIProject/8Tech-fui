@@ -1,5 +1,5 @@
 import {FormControl, FormHelperText, TextField} from "@mui/material";
-import RequiredFormLabel from "../../agnostic/Form/RequiredFormLabel";
+import RequiredFormLabel from "../../../agnostic/Form/RequiredFormLabel";
 import {Controller, useFormContext} from 'react-hook-form';
 
 export default function PasswordControl() {

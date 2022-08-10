@@ -1,40 +1,35 @@
 import {FormControl, FormHelperText, TextField} from "@mui/material";
-import RequiredFormLabel from "../../agnostic/Form/RequiredFormLabel";
-import {useFormContext, Controller} from "react-hook-form";
+import RequiredFormLabel from "../../../agnostic/Form/RequiredFormLabel";
+import {Controller, useFormContext} from 'react-hook-form';
 
-export default function EmailControl() {
-    const {formState: {errors}} = useFormContext();
-    const name = 'email';
-    const label = 'Email';
-    const emailError = errors[name];
-    const errored = !!emailError;
+export default function FirstnameControl() {
+    const { formState: { errors } } = useFormContext();
+    const name = 'firstname';
+    const label = 'Prénom';
+    const firstnameError = errors[name];
+    const errored = !!firstnameError;
 
     return (
-        <FormControl error={errored} sx={{width: '100%', mb: 1}}>
+        <FormControl error={errored} sx={{width: '100%'}}>
             <RequiredFormLabel id={`${name}-label`}>{label}</RequiredFormLabel>
             <Controller
                 name={name}
                 defaultValue={''}
                 render={({field: {onChange, value}}) => (
                     <TextField
-                        onChange={onChange}
-                        value={value}
                         size={'small'}
+                        value={value}
+                        onChange={onChange}
                         error={errored}
                     />
                 )}
             />
             {
-                emailError && (
+                firstnameError && (
                     <FormHelperText id={`${name}-error-text`} style={{ margin: 0 }}>
                         {
-                            (emailError.type === 'required') && (
+                            (firstnameError.type === 'required') && (
                                 <>{`${label} est obligatoire`}</>
-                            )
-                        }
-                        {
-                            (emailError.type === 'email') && (
-                                <>{`${label} invalide`}</>
                             )
                         }
                     </FormHelperText>

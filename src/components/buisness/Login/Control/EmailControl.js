@@ -1,35 +1,40 @@
 import {FormControl, FormHelperText, TextField} from "@mui/material";
-import RequiredFormLabel from "../../agnostic/Form/RequiredFormLabel";
-import {Controller, useFormContext} from "react-hook-form";
+import RequiredFormLabel from "../../../agnostic/Form/RequiredFormLabel";
+import {useFormContext, Controller} from "react-hook-form";
 
-export default function LastnameControl() {
+export default function EmailControl() {
     const {formState: {errors}} = useFormContext();
-    const name = 'lastname';
-    const label = 'Nom';
-    const lastnameError = errors[name];
-    const errored = !!lastnameError;
+    const name = 'email';
+    const label = 'Email';
+    const emailError = errors[name];
+    const errored = !!emailError;
 
     return (
-        <FormControl error={errored} sx={{width: '100%'}}>
+        <FormControl error={errored} sx={{width: '100%', mb: 1}}>
             <RequiredFormLabel id={`${name}-label`}>{label}</RequiredFormLabel>
             <Controller
                 name={name}
                 defaultValue={''}
                 render={({field: {onChange, value}}) => (
                     <TextField
-                        error={errored}
-                        size={'small'}
                         onChange={onChange}
                         value={value}
+                        size={'small'}
+                        error={errored}
                     />
                 )}
             />
             {
-                lastnameError && (
+                emailError && (
                     <FormHelperText id={`${name}-error-text`} style={{ margin: 0 }}>
                         {
-                            (lastnameError.type === 'required') && (
+                            (emailError.type === 'required') && (
                                 <>{`${label} est obligatoire`}</>
+                            )
+                        }
+                        {
+                            (emailError.type === 'email') && (
+                                <>{`${label} invalide`}</>
                             )
                         }
                     </FormHelperText>

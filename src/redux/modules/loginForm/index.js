@@ -1,8 +1,7 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {isEmpty, omitBy} from "lodash";
-import {PayloadAction} from "@reduxjs/toolkit";
 
-export const stateName = 'registerFormState';
+export const stateName = 'loginFormState';
 
 const initialState = {
     isSubmitted: false,
@@ -10,11 +9,11 @@ const initialState = {
     isSubmitting: false,
 }
 
-const registerFormStateSlice = createSlice({
+const loginFormStateSlice = createSlice({
     name: stateName,
     initialState,
     reducers: {
-        submitRegisterForm: {
+        submitLoginForm: {
             reducer(state) {
                 state.isSubmitting = true;
             },
@@ -32,24 +31,22 @@ const registerFormStateSlice = createSlice({
     }
 });
 
-export default registerFormStateSlice.reducer;
+export default loginFormStateSlice.reducer;
 
 export const {
-    submitRegisterForm,
+    submitLoginForm,
     submitSuccessful,
     submitFailed,
     reset,
-} = registerFormStateSlice.actions
+} = loginFormStateSlice.actions
 
 function prepare({ data }) {
     const sanitized = sanitizeRoot(data);
 
-    const {firstname, lastname, email, password} = sanitized
+    const {email, password} = sanitized
 
     return {
         payload: {
-            firstname,
-            lastname,
             email,
             password,
         }

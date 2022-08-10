@@ -4,17 +4,19 @@ import {Box, Button, Container, Link, Stack, Typography} from '@mui/material';
 import {yupResolver} from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import {DevTool} from "@hookform/devtools";
-import FirstnameControl from "../components/Registration/Control/FirstnameControl";
-import LastnameControl from "../components/Registration/Control/LastnameControl";
-import EmailControl from "../components/Registration/Control/EmailControl";
-import PasswordControl from "../components/Registration/Control/PasswordControl";
-import ConfirmPasswordControl from "../components/Registration/Control/ConfirmPasswordControl";
+import FirstnameControl from "../components/buisness/Registration/Control/FirstnameControl";
+import LastnameControl from "../components/buisness/Registration/Control/LastnameControl";
+import EmailControl from "../components/buisness/Registration/Control/EmailControl";
+import PasswordControl from "../components/buisness/Registration/Control/PasswordControl";
+import ConfirmPasswordControl from "../components/buisness/Registration/Control/ConfirmPasswordControl";
 import useRegisterForm from "../redux/modules/registerForm/hooks/useRegisterForm";
+import {useNavigate} from "react-router-dom";
 
 export default function Registration() {
+    const navigate = useNavigate();
     const {submit, formState: {isSubmitting, isSubmitSuccessful, isSubmitted}} = useRegisterForm({
         onSuccess() {
-            // todo ajouter redirection vers la homepage
+            navigate('/');
         }
     });
 

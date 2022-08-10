@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Login from './screens/Login.js';
 import Registration from './screens/Registration.js';
@@ -10,8 +10,17 @@ import '@fontsource/roboto/700.css';
 import './styles/App.css';
 import Home from "./screens/Home";
 import Layout from "./components/buisness/Layout";
+import {useDispatch} from "react-redux";
+import {refreshSession} from "./redux/modules/session";
 
 export default function App() {
+    const dispatch = useDispatch();
+    const sessionStorage = localStorage.getItem('session');
+    useEffect(() => {
+        if (sessionStorage) {
+            dispatch(refreshSession());
+        }
+    }, [])
 
     return (
         <Layout>

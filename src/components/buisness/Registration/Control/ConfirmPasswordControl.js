@@ -1,13 +1,15 @@
 import {FormControl, FormHelperText, TextField} from "@mui/material";
-import RequiredFormLabel from "../../agnostic/Form/RequiredFormLabel";
+import RequiredFormLabel from "../../../agnostic/Form/RequiredFormLabel";
 import {Controller, useFormContext} from 'react-hook-form';
 
-export default function FirstnameControl() {
-    const { formState: { errors } } = useFormContext();
-    const name = 'firstname';
-    const label = 'Prénom';
-    const firstnameError = errors[name];
-    const errored = !!firstnameError;
+export default function ConfirmPasswordControl() {
+    const { watch, formState: { errors } } = useFormContext();
+    const [password, confirmPassword] = watch(['password', 'confirmPassword']);
+    const samePassword = password === confirmPassword;
+    const name = 'confirmPassword';
+    const label = 'Confirmer mot de passe';
+    const confirmPasswordError = errors[name];
+    const errored = !!confirmPasswordError || (!!confirmPassword && !samePassword);
 
     return (
         <FormControl error={errored} sx={{width: '100%'}}>
@@ -21,15 +23,21 @@ export default function FirstnameControl() {
                         value={value}
                         onChange={onChange}
                         error={errored}
+                        type={'password'}
                     />
                 )}
             />
             {
-                firstnameError && (
+                confirmPasswordError && (
                     <FormHelperText id={`${name}-error-text`} style={{ margin: 0 }}>
                         {
-                            (firstnameError.type === 'required') && (
+                            (confirmPasswordError.type === 'required') && (
                                 <>{`${label} est obligatoire`}</>
+                            )
+                        }
+                        {
+                            (!samePassword) && (
+                                <>{`Les mots de passe doivent être identiques`}</>
                             )
                         }
                     </FormHelperText>

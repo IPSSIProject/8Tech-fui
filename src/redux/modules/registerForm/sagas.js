@@ -4,7 +4,7 @@ import {PayloadAction} from "@reduxjs/toolkit";
 import postUser from "../apiCall/postUser";
 
 export function* registerFormSagas() {
-    yield takeEvery(submitRegisterForm.type, function* (action: PayloadAction) {
+    yield takeEvery(submitRegisterForm.type, function* (action) {
         try {
             const response = yield call(postUser, action.payload);
             yield put(submitSuccessful(response.data));

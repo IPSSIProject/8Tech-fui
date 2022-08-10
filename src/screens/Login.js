@@ -1,103 +1,84 @@
-import { React, useState } from 'react'
-import {
-  Typography,
-  TextField,
-  Button,
-  Grid,
-  Container,
-  Link
-} from '@mui/material'
+import {React} from 'react'
+import {Box, Button, Container, Link, Typography} from '@mui/material'
+import * as yup from "yup";
+import {FormProvider, useForm} from "react-hook-form";
+import {yupResolver} from "@hookform/resolvers/yup";
+import {DevTool} from "@hookform/devtools";
+import {useNavigate} from "react-router-dom";
+import useLoginForm from "../redux/modules/loginForm/hooks/useLoginForm";
+import EmailControl from "../components/buisness/Login/Control/EmailControl";
+import PasswordControl from "../components/buisness/Login/Control/PasswordControl";
 
 export default function Login() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState({ input: -1, message: '' });
+  const navigate = useNavigate();
+  const {submit, formState: {isSubmitting, isSubmitSuccessful, isSubmitted}} = useLoginForm({
+    onSuccess() {
+      navigate('/');
+    }
+  });
 
-  // Test regex on fields
-  const checkFields = () => {
-    if (email.length === 0) {
-      setError({
-        input: 0,
-        message: 'Ce champs doit être rempli'
-      });
-      return false;
-    }
-    if (password.length === 0) {
-      setError({
-        input: 1,
-        message: 'Ce champs doit être rempli'
-      });
-      return false;
-    }
-    setError({
-      input: -1,
-      message: ''
-    });
-    return true;
+  const validationSchema = yup.object({
+    email: yup.string().email().required(),
+    password: yup.string().matches(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/),
+  })
+
+  const methods = useForm({
+    resolver: yupResolver(validationSchema)
+  });
+
+  const onSubmit = (data) => {
+    submit(data);
   }
 
   return (
-    <Container
-      sx={{
-        width: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        mt: 10
-      }}
-    >
-      <Typography component="h1" variant="h4" sx={{ mt: 2, mb: 5 }}>
-        Connexion
-      </Typography>
-      <Grid
-        container
-        item
-        direction="row"
-        justifyContent="center"
-        alignItems="center"
-        xs={12}
-        md={6}
-        columnSpacing={2}
-        rowSpacing={1}
+      <Container
+          sx={{
+            width: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            mt: 10
+          }}
       >
-        <Grid item xs={12}>
-          <TextField
-            label="Adresse email"
-            variant="outlined"
-            required
-            fullWidth
-            onChange={(e) => setEmail(e.target.value)}
-            error={error.input === 0}
-            helperText={error.input === 0 ? error.message : ' '}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            label="Mot de passe"
-            variant="outlined"
-            type="password"
-            required
-            fullWidth
-            onChange={(e) => setPassword(e.target.value)}
-            error={error.input === 1}
-            helperText={error.input === 1 ? error.message : ' '}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <Button
-            onClick={() => checkFields()}
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ py: 1.4 }}
-          >
-            Se connecter
-          </Button>
-        </Grid>
-      </Grid>
-      <Link href="/register" underline="always" sx={{ mt: 3 }}>
-        Pas encore inscrit ? Créez-vous un compte !
-      </Link>
-    </Container>
+        <Typography
+            component="h1"
+            variant="h4"
+            sx={{ mt: 2, mb: 5 }}
+        >
+          Connexion
+        </Typography>
+
+        <Box
+            sx={{
+              width: '50%'
+            }}
+        >
+          <FormProvider {...methods}>
+            <form onSubmit={methods.handleSubmit(onSubmit)}>
+
+              <EmailControl />
+
+              <PasswordControl />
+
+              <Button
+                  sx={{
+                    width: '100%',
+                    marginTop: '10px',
+                  }}
+                  type={'submit'}
+                  variant={'contained'}
+
+              >
+                Se connecter
+              </Button>
+            </form>
+          </FormProvider>
+        </Box>
+
+        <Link href="/registration" underline="always" sx={{ mt: 3 }}>
+          {'Pas de compte? Inscrivez-vous ici !'}
+        </Link>
+        <DevTool control={methods.control} /> {/* set up the dev tool */}
+      </Container>
   )
 }
