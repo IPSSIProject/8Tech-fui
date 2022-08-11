@@ -13,10 +13,13 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import logo from "../../assets/logo-blanc.png";
 import {useNavigate} from "react-router-dom";
-import {Link} from "@mui/material";
+import {Badge, Link, Stack} from "@mui/material";
 import Connected from "../buisness/Connected";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {closeSession} from "../../redux/modules/session";
+import ShoppingBasketOutlinedIcon from '@mui/icons-material/ShoppingBasketOutlined';
+import {cartSelectors} from "../../redux/modules/cart/cartSelectors";
+import {sumBy} from "lodash";
 
 const pages = [
     {
@@ -38,6 +41,8 @@ const ResponsiveAppBar = () => {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
     const navigate = useNavigate();
+    const cartItems = useSelector(cartSelectors.cartItems);
+    const quantityCart = sumBy(cartItems, 'quantity')
 
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
@@ -157,39 +162,51 @@ const ResponsiveAppBar = () => {
                     </Box>
 
                     <Connected>
-                        <Box sx={{ flexGrow: 0 }}>
-                            <Tooltip title="Open settings">
-                                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                    <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                        <Stack direction={'row'} spacing={2} alignItems={'center'}>
+
+                                <IconButton>
+                                    <Badge badgeContent={quantityCart} color={'error'}>
+                                    <ShoppingBasketOutlinedIcon
+                                        onClick={() => navigate('/cart')}
+                                        fontSize={'large'}
+                                        sx={{color: 'white'}}
+                                    />
+                                    </Badge>
                                 </IconButton>
-                            </Tooltip>
-                            <Menu
-                                sx={{ mt: '45px' }}
-                                id="menu-appbar"
-                                anchorEl={anchorElUser}
-                                anchorOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'right',
-                                }}
-                                keepMounted
-                                transformOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'right',
-                                }}
-                                open={Boolean(anchorElUser)}
-                                onClose={handleCloseUserMenu}
-                            >
-                                <MenuItem key={'account'} onClick={handleCloseUserMenu}>
-                                    <Typography textAlign="center">Compte</Typography>
-                                </MenuItem>
-                                <MenuItem key={'orders'} onClick={handleCloseUserMenu}>
-                                    <Typography textAlign="center">Mes commandes</Typography>
-                                </MenuItem>
-                                <MenuItem key={'logout'} onClick={logout}>
-                                    <Typography textAlign="center">Déconnexion</Typography>
-                                </MenuItem>
-                            </Menu>
-                        </Box>
+                            <Box sx={{ flexGrow: 0 }}>
+                                <Tooltip title="Open settings">
+                                    <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                                        <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                                    </IconButton>
+                                </Tooltip>
+                                <Menu
+                                    sx={{ mt: '45px' }}
+                                    id="menu-appbar"
+                                    anchorEl={anchorElUser}
+                                    anchorOrigin={{
+                                        vertical: 'top',
+                                        horizontal: 'right',
+                                    }}
+                                    keepMounted
+                                    transformOrigin={{
+                                        vertical: 'top',
+                                        horizontal: 'right',
+                                    }}
+                                    open={Boolean(anchorElUser)}
+                                    onClose={handleCloseUserMenu}
+                                >
+                                    <MenuItem key={'account'} onClick={handleCloseUserMenu}>
+                                        <Typography textAlign="center">Compte</Typography>
+                                    </MenuItem>
+                                    <MenuItem key={'orders'} onClick={handleCloseUserMenu}>
+                                        <Typography textAlign="center">Mes commandes</Typography>
+                                    </MenuItem>
+                                    <MenuItem key={'logout'} onClick={logout}>
+                                        <Typography textAlign="center">Déconnexion</Typography>
+                                    </MenuItem>
+                                </Menu>
+                            </Box>
+                        </Stack>
                     </Connected>
                 </Toolbar>
             </Container>

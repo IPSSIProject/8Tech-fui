@@ -23,7 +23,7 @@ const sessionStateSlice = createSlice({
             const sessionStorage = JSON.parse(localStorage.getItem('session'));
 
             state.token = sessionStorage.token
-            state.userId = sessionStorage.id
+            state.userId = sessionStorage.userId
             state.isAdmin = sessionStorage.isAdmin
         },
 

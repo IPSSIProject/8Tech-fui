@@ -10,8 +10,10 @@ import {registerFormSagas} from "./modules/registerForm/sagas";
 import registerForm from "./modules/registerForm";
 import {loginFormSagas} from "./modules/loginForm/sagas";
 import loginForm from './modules/loginForm'
-import session from './modules/session'
+import session from './modules/session';
+import cart from './modules/cart';
 import {sessionSagas} from "./modules/session/sagas";
+import {cartSagas} from "./modules/cart/sagas";
 
 const sagaMiddleware = createSagaMiddleware()
 
@@ -23,8 +25,8 @@ export const configureStore = (initialState = {} ) => {
             [CategoryState.stateKey]: categoryReducer,
             registerForm,
             loginForm,
-            session
-
+            session,
+            cart
         }),
         initialState,
         composeWithDevTools({trace: true})(
@@ -48,5 +50,6 @@ function* rootSaga() {
         registerFormSagas(),
         loginFormSagas(),
         sessionSagas(),
+        cartSagas(),
     ])
 }
