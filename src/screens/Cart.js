@@ -1,7 +1,4 @@
-import {
-    Stack, ToggleButton, ToggleButtonGroup,
-    Typography
-} from "@mui/material";
+import {Stack, ToggleButton, ToggleButtonGroup, Typography} from "@mui/material";
 import Button from "@mui/material/Button";
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
@@ -10,7 +7,6 @@ import {cartSelectors} from "../redux/modules/cart/cartSelectors";
 import {ProductsState} from "../redux/modules/products";
 import {submitAddProduct, submitDecrementQuantityProduct, submitRemoveOneProduct} from "../redux/modules/cart";
 import {sessionSelectors} from "../redux/modules/session/sessionSelectors";
-import {useEffect} from "react";
 import {useNavigate} from "react-router-dom";
 
 export default function Cart() {
@@ -33,7 +29,10 @@ export default function Cart() {
     let totalPrice = 0;
 
     cartItems.forEach(item => {
-        totalPrice += item.price * item.cartQuantity
+        const isInPromotion = item.promotion > 0;
+        const reducedPrice = (1-(item.promotion/100)) * item.price;
+        const calculatedPrice = isInPromotion ? reducedPrice : item.price;
+        totalPrice += calculatedPrice * item.cartQuantity
     })
 
     return (
@@ -51,6 +50,7 @@ export default function Cart() {
                                             id={ci.id}
                                             picture={'https://caer.univ-amu.fr/wp-content/uploads/default-placeholder.png'}
                                             price={ci.price}
+                                            promotion={ci.promotion}
                                             quantity={ci.cartQuantity}
                                             title={ci.name}
                                         />
@@ -106,12 +106,16 @@ function EmptyCart() {
  * @param price
  * @param quantity
  * @param picture
+ * @param promotion
  * @return {JSX.Element}
  * @constructor
  */
-function CartItem({id, title, price, quantity, picture}) {
+function CartItem({id, title, price, quantity, picture, promotion}) {
     const dispatch = useDispatch();
     const userId = useSelector(sessionSelectors.userId);
+    const isInPromotion = promotion > 0;
+    const reducedPrice = (1-(promotion/100)) * price;
+    const calculatedPrice = isInPromotion ? reducedPrice : price;
 
     const decrementQuantityOfProduct = (userId, productId) => {
         dispatch(
@@ -130,7 +134,7 @@ function CartItem({id, title, price, quantity, picture}) {
                     {title}
                 </Typography>
                 <Typography>
-                    {`Prix: ${price}€`}
+                    {`Prix: ${calculatedPrice}€`}
                 </Typography>
                 <Stack direction={'row'} spacing={2}>
                     <Stack direction={'row'} alignItems={'center'} spacing={1}>

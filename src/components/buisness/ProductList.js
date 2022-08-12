@@ -17,6 +17,7 @@ import Separator from "../agnostic/Separator";
 import {useLocation} from "react-router-dom";
 import {ProductsState} from "../../redux/modules/products";
 import {useSelector} from "react-redux";
+import {CategoryState} from "../../redux/modules/categories";
 
 /**
  *
@@ -50,6 +51,7 @@ export default function ProductList() {
                                             cover={image}
                                             price={price}
                                             quantity={quantity}
+                                            promotion={promotion}
                                         />
 
                                     )
@@ -76,6 +78,15 @@ function ProductFilters(props) {
     const [priceRange, setPriceRange] = useState([0, 10000]);
     const [brandFilter, setBrandFilter] = useState([]);
     const [promotion, setPromotion] = useState(false);
+    const brands = useSelector(ProductsState.selectors.allBrands);
+    const categories = useSelector(CategoryState.selectors.allCategories);
+    const categoryOptions = categories.map(
+        c => ({
+            label: c.name,
+            value: c.name
+        })
+    );
+    console.log(categoryOptions)
 
     useEffect(() => {
         handleProductsFilter(products)
@@ -102,13 +113,6 @@ function ProductFilters(props) {
         setPromotion(!promotion);
     }
 
-    const brand = [
-        'Corsair',
-        'Logitech',
-        'Asus',
-        'Intel',
-    ];
-
     const handleChangeBrandFilter = (event) => {
         const {
             target: {value},
@@ -134,7 +138,7 @@ function ProductFilters(props) {
                     isSearchable={true}
                     isDisabled={false}
                     placeholder={'Catégorie'}
-                    options={categoryList}
+                    options={categoryOptions}
                     onChange={handleChangeCategory}
                 />
                 <Separator/>
@@ -145,7 +149,7 @@ function ProductFilters(props) {
                     onChange={handleChangePriceRange}
                     valueLabelDisplay="auto"
                     min={150}
-                    max={1052}
+                    max={10000}
                 />
                 <Separator/>
                 <p>Marque</p>
@@ -161,7 +165,7 @@ function ProductFilters(props) {
                     multiple
                 >
                     {
-                        brand.map(
+                        brands.map(
                             (name) => (
                                 <MenuItem key={name} value={name} >
                                     <Checkbox checked={brandFilter.indexOf(name) > -1}/>

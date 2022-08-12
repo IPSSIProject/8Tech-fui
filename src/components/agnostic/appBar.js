@@ -168,11 +168,15 @@ const ResponsiveAppBar = () => {
                             </Button>
                         ))}
                     </Box>
-                    <Stack direction={'row'} spacing={2} alignItems={'center'}>
-                        <Button sx={{color: 'white'}} onClick={() => navigate('/login')}>
-                            Se connecter
-                        </Button>
-                    </Stack>
+                    {
+                        !isConnected && (
+                            <Stack direction={'row'} spacing={2} alignItems={'center'}>
+                                <Button sx={{color: 'white'}} onClick={() => navigate('/login')}>
+                                    Se connecter
+                                </Button>
+                            </Stack>
+                        )
+                    }
                     <Connected>
                         <Stack direction={'row'} spacing={2} alignItems={'center'}>
                                 <IconButton>
