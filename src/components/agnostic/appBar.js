@@ -45,6 +45,7 @@ const ResponsiveAppBar = () => {
     const cartItems = useSelector(cartSelectors.cartItems);
     const quantityCart = sumBy(cartItems, 'quantity');
     const isAdmin = useSelector(sessionSelectors.isAdmin);
+    const isConnected = useSelector(sessionSelectors.connected);
 
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
@@ -167,10 +168,13 @@ const ResponsiveAppBar = () => {
                             </Button>
                         ))}
                     </Box>
-
+                    <Stack direction={'row'} spacing={2} alignItems={'center'}>
+                        <Button sx={{color: 'white'}} onClick={() => navigate('/login')}>
+                            Se connecter
+                        </Button>
+                    </Stack>
                     <Connected>
                         <Stack direction={'row'} spacing={2} alignItems={'center'}>
-
                                 <IconButton>
                                     <Badge badgeContent={quantityCart} color={'error'}>
                                     <ShoppingBasketOutlinedIcon

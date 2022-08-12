@@ -6,6 +6,7 @@ import {submitAddProduct} from "../../redux/modules/cart";
 import {sessionSelectors} from "../../redux/modules/session/sessionSelectors";
 import {round} from "lodash";
 
+/*`http://localhost:4000${props.cover}`*/
 /**
  *
  * props = {
@@ -48,7 +49,7 @@ function ProductCard(props) {
                             height: 250,
                             objectFit: 'contain'
                         }}
-                        image={`http://localhost:4000${props.cover}`}
+                        image={'https://caer.univ-amu.fr/wp-content/uploads/default-placeholder.png'}
                     />
                 </div>
 

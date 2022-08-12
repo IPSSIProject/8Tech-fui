@@ -78,7 +78,7 @@ export default function AdminProductForm({submit, formState, productId, mode}) {
                             </LoadingButton>
                         </Stack>
 
-                        <DevTool control={methods.control} />
+                        {/*<DevTool control={methods.control} />*/}
                     </form>
                 </FormProvider>
             </AdminPage>

@@ -91,7 +91,7 @@ export default function Registration() {
             <Link href="/login" underline="always" sx={{ mt: 3 }}>
                 {'Déjà inscrit ? Connectez-vous !'}
             </Link>
-            <DevTool control={methods.control} /> {/* set up the dev tool */}
+            {/*<DevTool control={methods.control} />*/} {/* set up the dev tool */}
         </Container>
     )
 }

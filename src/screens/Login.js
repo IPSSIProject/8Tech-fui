@@ -75,10 +75,10 @@ export default function Login() {
           </FormProvider>
         </Box>
 
-        <Link href="/registration" underline="always" sx={{ mt: 3 }}>
+        <Link href="/register" underline="always" sx={{ mt: 3 }}>
           {'Pas de compte? Inscrivez-vous ici !'}
         </Link>
-        <DevTool control={methods.control} /> {/* set up the dev tool */}
+        {/*<DevTool control={methods.control} />*/} {/* set up the dev tool */}
       </Container>
   )
 }

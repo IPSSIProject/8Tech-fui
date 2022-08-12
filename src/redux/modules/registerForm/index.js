@@ -52,6 +52,7 @@ function prepare({ data }) {
             lastname,
             email,
             password,
+            isAdmin: false
         }
     }
 }

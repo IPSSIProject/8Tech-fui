@@ -49,7 +49,7 @@ export default function Cart() {
                                     ci => (
                                         <CartItem
                                             id={ci.id}
-                                            picture={'https://img-4.linternaute.com/0NSf1MzZQkxf9qDg3A04_TRsnRs=/1500x/smart/57913313d0d0456ca1fb94881fe20790/ccmcms-linternaute/16498482.jpg'}
+                                            picture={'https://caer.univ-amu.fr/wp-content/uploads/default-placeholder.png'}
                                             price={ci.price}
                                             quantity={ci.cartQuantity}
                                             title={ci.name}
@@ -80,7 +80,7 @@ export default function Cart() {
                         <Button
                             variant={'contained'}
                             disabled={cartItems.length === 0}
-                            onClick={() => navigate('payment')}
+                            onClick={() => navigate('/payment')}
                         >
                             Passer la commande
                         </Button>
