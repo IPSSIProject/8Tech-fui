@@ -14,6 +14,8 @@ import session from './modules/session';
 import cart from './modules/cart';
 import {sessionSagas} from "./modules/session/sagas";
 import {cartSagas} from "./modules/cart/sagas";
+import newProductForm from "./modules/newProductForm";
+import {newProductFormSagas} from "./modules/newProductForm/sagas";
 
 const sagaMiddleware = createSagaMiddleware()
 
@@ -26,7 +28,8 @@ export const configureStore = (initialState = {} ) => {
             registerForm,
             loginForm,
             session,
-            cart
+            cart,
+            newProductForm
         }),
         initialState,
         composeWithDevTools({trace: true})(
@@ -51,5 +54,6 @@ function* rootSaga() {
         loginFormSagas(),
         sessionSagas(),
         cartSagas(),
+        newProductFormSagas(),
     ])
 }

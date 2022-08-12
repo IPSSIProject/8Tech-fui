@@ -47,7 +47,7 @@ export default function ProductList() {
                                         <ProductCard
                                             id={id}
                                             name={name}
-                                            image={image}
+                                            cover={image}
                                             price={price}
                                             quantity={quantity}
                                         />
@@ -73,7 +73,7 @@ function ProductFilters(props) {
     const query = currentRoute.state || {};
 
     const [category, setCategory] = useState();
-    const [priceRange, setPriceRange] = useState([0, 1052]);
+    const [priceRange, setPriceRange] = useState([0, 10000]);
     const [brandFilter, setBrandFilter] = useState([]);
     const [promotion, setPromotion] = useState(false);
 

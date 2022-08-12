@@ -37,7 +37,7 @@ export default function Home() {
                                     <ProductCard
                                         id={p.id}
                                         name={p.name}
-                                        cover={p.cover}
+                                        cover={p.image}
                                         price={p.price}
                                         quantity={p.quantity}
                                         promotion={p.promotion}

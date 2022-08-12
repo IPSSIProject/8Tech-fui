@@ -48,7 +48,7 @@ function ProductCard(props) {
                             height: 250,
                             objectFit: 'contain'
                         }}
-                        image={props.image}
+                        image={`http://localhost:4000${props.cover}`}
                     />
                 </div>
 

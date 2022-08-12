@@ -1,8 +1,8 @@
-import {http} from "../https";
+import {https} from "../https";
 
 function deleteOneProduct(userId, productId) {
 
-    return http.delete(`/cart/${userId}/${productId}`);
+    return https.delete(`/cart/${userId}/${productId}`);
 }
 
 export default deleteOneProduct;

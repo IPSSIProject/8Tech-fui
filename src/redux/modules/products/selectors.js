@@ -1,6 +1,6 @@
 import {ProductsState} from "./index";
 import {createSelector} from "@reduxjs/toolkit";
-import {uniq} from 'lodash'
+import {uniq, uniqBy} from 'lodash'
 
 const getState = (state) => state[ProductsState.stateKey];
 const getAllProducts = (state) => getState(state).products;
@@ -20,5 +20,9 @@ export default {
     allBrands: createSelector(
         getAllProducts,
         allProducts => uniq(allProducts.map(p => p.brand))
+    ),
+    allCategories: createSelector(
+        getAllProducts,
+        allProducts => uniqBy(allProducts.map(p => p.category), 'id')
     )
 }

@@ -20,6 +20,7 @@ import {closeSession} from "../../redux/modules/session";
 import ShoppingBasketOutlinedIcon from '@mui/icons-material/ShoppingBasketOutlined';
 import {cartSelectors} from "../../redux/modules/cart/cartSelectors";
 import {sumBy} from "lodash";
+import {sessionSelectors} from "../../redux/modules/session/sessionSelectors";
 
 const pages = [
     {
@@ -42,7 +43,8 @@ const ResponsiveAppBar = () => {
     const [anchorElUser, setAnchorElUser] = React.useState(null);
     const navigate = useNavigate();
     const cartItems = useSelector(cartSelectors.cartItems);
-    const quantityCart = sumBy(cartItems, 'quantity')
+    const quantityCart = sumBy(cartItems, 'quantity');
+    const isAdmin = useSelector(sessionSelectors.isAdmin);
 
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
@@ -62,6 +64,11 @@ const ResponsiveAppBar = () => {
     const logout = () => {
         handleCloseUserMenu();
         dispatch(closeSession());
+    }
+
+    const goToEspaceAdmin = () => {
+        handleCloseUserMenu();
+        navigate('/admin-space');
     }
 
     return (
@@ -195,6 +202,13 @@ const ResponsiveAppBar = () => {
                                     open={Boolean(anchorElUser)}
                                     onClose={handleCloseUserMenu}
                                 >
+                                    {
+                                        isAdmin && (
+                                            <MenuItem key={'account'} onClick={goToEspaceAdmin}>
+                                                <Typography textAlign="center">Espace admin</Typography>
+                                            </MenuItem>
+                                        )
+                                    }
                                     <MenuItem key={'account'} onClick={handleCloseUserMenu}>
                                         <Typography textAlign="center">Compte</Typography>
                                     </MenuItem>

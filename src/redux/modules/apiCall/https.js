@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const http = axios.create({})
+const https = axios.create({})
 
 const getRequestHeaders = () => {
     const session = JSON.parse(localStorage.getItem('session'));
@@ -20,6 +20,6 @@ const requestInterceptor = (config) => {
     return config;
 }
 
-http.interceptors.request.use(requestInterceptor);
+https.interceptors.request.use(requestInterceptor);
 
-export { http };
+export { https };

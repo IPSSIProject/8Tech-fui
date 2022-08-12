@@ -11,6 +11,7 @@ import PasswordControl from "../components/buisness/Registration/Control/Passwor
 import ConfirmPasswordControl from "../components/buisness/Registration/Control/ConfirmPasswordControl";
 import useRegisterForm from "../redux/modules/registerForm/hooks/useRegisterForm";
 import {useNavigate} from "react-router-dom";
+import DefaultAddressControl from "../components/buisness/Registration/Control/DefaultAddressControl";
 
 export default function Registration() {
     const navigate = useNavigate();
@@ -20,78 +21,78 @@ export default function Registration() {
         }
     });
 
-  const validationSchema = yup.object({
-    firstname: yup.string().required(),
-    lastname: yup.string().required(),
-    email: yup.string().email().required(),
-    password: yup.string().matches(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/),
-    confirmPassword: yup.string().required(),
-  })
+    const validationSchema = yup.object({
+        firstname: yup.string().required(),
+        lastname: yup.string().required(),
+        email: yup.string().email().required(),
+        password: yup.string().matches(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/),
+        confirmPassword: yup.string().required(),
+    })
 
-  const methods = useForm({
-    resolver: yupResolver(validationSchema)
-  });
+    const methods = useForm({
+        resolver: yupResolver(validationSchema)
+    });
 
-  const onSubmit = (data) => {
-      submit(data);
-  }
+    const onSubmit = (data) => {
+        submit(data);
+    }
 
-  return (
-      <Container
-          sx={{
-            width: '100%',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            mt: 10
-          }}
-      >
-        <Typography
-            component="h1"
-            variant="h4"
-            sx={{ mt: 2, mb: 5 }}
-        >
-          Inscription
-        </Typography>
-
-        <Box
+    return (
+        <Container
             sx={{
-              width: '50%'
+                width: '100%',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                mt: 10
             }}
         >
-          <FormProvider {...methods}>
-            <form onSubmit={methods.handleSubmit(onSubmit)}>
-              <Stack direction={'row'} spacing={2} sx={{mb: 2}}>
-                <LastnameControl />
-                <FirstnameControl />
-              </Stack>
+            <Typography
+                component="h1"
+                variant="h4"
+                sx={{ mt: 2, mb: 5 }}
+            >
+                Inscription
+            </Typography>
 
-              <EmailControl />
+            <Box
+                sx={{
+                    width: '50%'
+                }}
+            >
+                <FormProvider {...methods}>
+                    <form onSubmit={methods.handleSubmit(onSubmit)}>
+                        <Stack direction={'row'} spacing={2} sx={{mb: 2}}>
+                            <LastnameControl />
+                            <FirstnameControl />
+                        </Stack>
 
-              <PasswordControl />
+                        <EmailControl />
 
-              <ConfirmPasswordControl />
+                        <PasswordControl />
 
-              <Button
-                  sx={{
-                    width: '100%',
-                    marginTop: '10px',
-                  }}
-                  type={'submit'}
-                  variant={'contained'}
+                        <ConfirmPasswordControl />
 
-              >
-                S'inscrire
-              </Button>
-            </form>
-          </FormProvider>
-        </Box>
+                        <Button
+                            sx={{
+                                width: '100%',
+                                marginTop: '10px',
+                            }}
+                            type={'submit'}
+                            variant={'contained'}
 
-        <Link href="/login" underline="always" sx={{ mt: 3 }}>
-          {'Déjà inscrit ? Connectez-vous !'}
-        </Link>
-        <DevTool control={methods.control} /> {/* set up the dev tool */}
-      </Container>
-  )
+                        >
+                            S'inscrire
+                        </Button>
+                    </form>
+                </FormProvider>
+            </Box>
+
+            <Link href="/login" underline="always" sx={{ mt: 3 }}>
+                {'Déjà inscrit ? Connectez-vous !'}
+            </Link>
+            <DevTool control={methods.control} /> {/* set up the dev tool */}
+        </Container>
+    )
 }
 

@@ -11,9 +11,10 @@ import {ProductsState} from "../redux/modules/products";
 import {submitAddProduct, submitDecrementQuantityProduct, submitRemoveOneProduct} from "../redux/modules/cart";
 import {sessionSelectors} from "../redux/modules/session/sessionSelectors";
 import {useEffect} from "react";
+import {useNavigate} from "react-router-dom";
 
 export default function Cart() {
-
+    const navigate = useNavigate();
     const productsCart = useSelector(cartSelectors.cartItems);
     const products = useSelector(ProductsState.selectors.allProducts);
 
@@ -76,7 +77,11 @@ export default function Cart() {
                         <Typography>
                             {`Prix total: ${totalPrice}€`}
                         </Typography>
-                        <Button variant={'contained'}>
+                        <Button
+                            variant={'contained'}
+                            disabled={cartItems.length === 0}
+                            onClick={() => navigate('payment')}
+                        >
                             Passer la commande
                         </Button>
                     </Stack>
